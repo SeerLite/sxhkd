@@ -4,10 +4,10 @@
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
 .\"      Date: 10/28/2021
 .\"    Manual: Sxhkd Manual
-.\"    Source: Sxhkd 0.6.2-1-gc18ef5b
+.\"    Source: Sxhkd 0.6.2-2-g0a307f5
 .\"  Language: English
 .\"
-.TH "SXHKD" "1" "10/28/2021" "Sxhkd 0\&.6\&.2\-1\-gc18ef5b" "Sxhkd Manual"
+.TH "SXHKD" "1" "10/28/2021" "Sxhkd 0\&.6\&.2\-2\-g0a307f5" "Sxhkd Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -47,13 +47,6 @@ Print the synopsis to standard output and exit\&.
 Print the version information to standard output and exit\&.
 .RE
 .PP
-\fB\-m\fR \fICOUNT\fR
-.RS 4
-Handle the first
-\fICOUNT\fR
-mapping notify events\&.
-.RE
-.PP
 \fB\-t\fR \fITIMEOUT\fR
 .RS 4
 Timeout in seconds for the recording of chord chains\&.
@@ -91,8 +84,6 @@ If \fBsxhkd\fR receives a \fISIGUSR1\fR (resp\&. \fISIGUSR2\fR) signal, it will 
 The commands are executed by piping to \fBSHELL\fR (hence you can use environment variables)\&.
 .sp
 \fBSHELL\fR will be the content of the first defined environment variable in the following list: \fBSXHKD_SHELL\fR, \fBSHELL\fR\&.
-.sp
-If you have a non\-QWERTY keyboard or a non\-standard layout configuration, you should provide a \fICOUNT\fR of \fI1\fR to the \fB\-m\fR option or \fI\-1\fR (interpreted as infinity) if you constantly switch from one layout to the other (\fBsxhkd\fR ignores all mapping notify events by default because the majority of those events are pointless)\&.
 .SH "CONFIGURATION"
 .sp
 Each line of the configuration file is interpreted as so:

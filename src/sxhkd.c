@@ -48,7 +48,6 @@ int num_extra_confs;
 int redir_fd;
 FILE *status_fifo;
 char progress[3 * MAXLEN];
-int mapping_count;
 int timeout;
 
 hotkey_t *hotkeys_head, *hotkeys_tail;
@@ -66,25 +65,20 @@ int main(int argc, char *argv[])
 	char *fifo_path = NULL;
 	status_fifo = NULL;
 	config_path = NULL;
-	mapping_count = 0;
 	timeout = TIMEOUT;
 	grabbed = false;
 	redir_fd = -1;
 	abort_keysym = ESCAPE_KEYSYM;
 
-	while ((opt = getopt(argc, argv, "hvm:t:c:r:s:a:")) != -1) {
+	while ((opt = getopt(argc, argv, "hv:t:c:r:s:a:")) != -1) {
 		switch (opt) {
 			case 'v':
 				printf("%s\n", VERSION);
 				exit(EXIT_SUCCESS);
 				break;
 			case 'h':
-				printf("sxhkd [-h|-v|-m COUNT|-t TIMEOUT|-c CONFIG_FILE|-r REDIR_FILE|-s STATUS_FIFO|-a ABORT_KEYSYM] [EXTRA_CONFIG ...]\n");
+				printf("sxhkd [-h|-v|-t TIMEOUT|-c CONFIG_FILE|-r REDIR_FILE|-s STATUS_FIFO|-a ABORT_KEYSYM] [EXTRA_CONFIG ...]\n");
 				exit(EXIT_SUCCESS);
-				break;
-			case 'm':
-				if (sscanf(optarg, "%i", &mapping_count) != 1)
-					warn("Can't parse mapping count.\n");
 				break;
 			case 't':
 				timeout = atoi(optarg);
@@ -259,8 +253,6 @@ void key_button_event(xcb_generic_event_t *evt, uint8_t event_type)
 
 void mapping_notify(xcb_generic_event_t *evt)
 {
-	if (!mapping_count)
-		return;
 	xcb_mapping_notify_event_t *e = (xcb_mapping_notify_event_t *) evt;
 	PRINTF("mapping notify %u %u\n", e->request, e->count);
 	if (e->request == XCB_MAPPING_POINTER)
@@ -270,8 +262,6 @@ void mapping_notify(xcb_generic_event_t *evt)
 		get_lock_fields();
 		reload_cmd();
 		abort_chord = make_chord(abort_keysym, XCB_NONE, 0, XCB_KEY_PRESS, false, false);
-		if (mapping_count > 0)
-			mapping_count--;
 	}
 }
 

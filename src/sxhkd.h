@@ -54,7 +54,6 @@ extern int num_extra_confs;
 extern int redir_fd;
 extern FILE *status_fifo;
 extern char progress[3 * MAXLEN];
-extern int mapping_count;
 extern int timeout;
 
 extern hotkey_t *hotkeys_head, *hotkeys_tail;

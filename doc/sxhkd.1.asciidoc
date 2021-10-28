@@ -30,9 +30,6 @@ Options
 *-v*::
     Print the version information to standard output and exit.
 
-*-m* _COUNT_::
-    Handle the first _COUNT_ mapping notify events.
-
 *-t* _TIMEOUT_::
     Timeout in seconds for the recording of chord chains.
 
@@ -63,9 +60,6 @@ If *sxhkd* receives a _SIGUSR1_ (resp. _SIGUSR2_) signal, it will reload its con
 The commands are executed by piping to *SHELL* (hence you can use environment variables).
 
 *SHELL* will be the content of the first defined environment variable in the following list: *SXHKD_SHELL*, *SHELL*.
-
-If you have a non-QWERTY keyboard or a non-standard layout configuration, you should provide a _COUNT_ of _1_ to the *-m* option or _-1_ (interpreted as infinity) if you constantly switch from one layout to the other (*sxhkd* ignores all mapping notify events by default because the majority of those events are pointless).
-
 
 Configuration
 -------------
