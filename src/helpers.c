@@ -52,11 +52,10 @@ void err(char *fmt, ...)
 
 void run(char *command, bool sync)
 {
-	char *cmd[] = {shell, "-c", command, NULL};
-	spawn(cmd, sync);
+	spawn(command, sync);
 }
 
-void spawn(char *cmd[], bool sync)
+void spawn(char *cmd, bool sync)
 {
 	if (fork() == 0) {
 		if (dpy != NULL)
@@ -73,15 +72,36 @@ void spawn(char *cmd[], bool sync)
 	wait(NULL);
 }
 
-void execute(char *cmd[])
+void execute(char *cmd)
 {
 	setsid();
 	if (redir_fd != -1) {
 		dup2(redir_fd, STDOUT_FILENO);
 		dup2(redir_fd, STDERR_FILENO);
 	}
-	execvp(cmd[0], cmd);
-	err("Spawning failed.\n");
+
+	int fd[2];
+	if (pipe(fd) == -1) {
+		err("Unable to open pipe.\n");
+	}
+
+	if (fork() == 0) {
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		execlp(shell, shell);
+	}
+
+	close(fd[0]);
+
+	if (write(fd[1], cmd, strlen(cmd)) == -1) {
+		err("Failed to write to pipe.\n");
+	};
+
+	close(fd[1]);
+
+	wait(NULL);
+	exit(EXIT_SUCCESS);
 }
 
 char *lgraph(char *s)

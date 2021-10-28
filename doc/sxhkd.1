@@ -2,12 +2,12 @@
 .\"     Title: sxhkd
 .\"    Author: [see the "Author" section]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 08/02/2020
+.\"      Date: 10/28/2021
 .\"    Manual: Sxhkd Manual
-.\"    Source: Sxhkd 0.6.2
+.\"    Source: Sxhkd 0.6.2-1-gc18ef5b
 .\"  Language: English
 .\"
-.TH "SXHKD" "1" "08/02/2020" "Sxhkd 0\&.6\&.2" "Sxhkd Manual"
+.TH "SXHKD" "1" "10/28/2021" "Sxhkd 0\&.6\&.2\-1\-gc18ef5b" "Sxhkd Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -88,7 +88,7 @@ Additional configuration files can be passed as arguments\&.
 .sp
 If \fBsxhkd\fR receives a \fISIGUSR1\fR (resp\&. \fISIGUSR2\fR) signal, it will reload its configuration file (resp\&. toggle the grabbing state of all its bindings)\&.
 .sp
-The commands are executed via \fBSHELL\fR \fI\-c\fR \fBCOMMAND\fR (hence you can use environment variables)\&.
+The commands are executed by piping to \fBSHELL\fR (hence you can use environment variables)\&.
 .sp
 \fBSHELL\fR will be the content of the first defined environment variable in the following list: \fBSXHKD_SHELL\fR, \fBSHELL\fR\&.
 .sp

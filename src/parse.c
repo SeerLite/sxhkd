@@ -2383,6 +2383,14 @@ void load_config(const char *config_file)
 
 	while (fgets(buf, sizeof(buf), cfg) != NULL) {
 		first = buf[0];
+
+		if ((isgraph(first) || strlen(buf) < 2 || first == START_COMMENT) && strlen(chain) > 0 && strlen(command) > 0) {
+			process_hotkey(chain, command);
+			chain[0] = '\0';
+			command[0] = '\0';
+			offset = 0;
+		}
+
 		if (strlen(buf) < 2 || first == START_COMMENT) {
 			continue;
 		} else {
@@ -2392,24 +2400,19 @@ void load_config(const char *config_file)
 			char *end = rgraph(buf);
 			*(end + 1) = '\0';
 
-			if (isgraph(first))
+			if (isgraph(first)) {
 				snprintf(chain + offset, sizeof(chain) - offset, "%s", start);
-			else
-				snprintf(command + offset, sizeof(command) - offset, "%s", start);
-
-			if (*end == PARTIAL_LINE) {
-				offset += end - start;
-				continue;
-			} else {
 				offset = 0;
+			} else {
+				snprintf(command + offset, sizeof(command) - offset, "%s\n", start);
+				offset += end - start + 2;
 			}
 
-			if (isspace(first) && strlen(chain) > 0 && strlen(command) > 0) {
-				process_hotkey(chain, command);
-				chain[0] = '\0';
-				command[0] = '\0';
-			}
 		}
+	}
+
+	if (strlen(chain) > 0 && strlen(command) > 0) {
+		process_hotkey(chain, command);
 	}
 
 	fclose(cfg);

@@ -60,7 +60,7 @@ Additional configuration files can be passed as arguments.
 
 If *sxhkd* receives a _SIGUSR1_ (resp. _SIGUSR2_) signal, it will reload its configuration file (resp. toggle the grabbing state of all its bindings).
 
-The commands are executed via *SHELL* _-c_ *COMMAND* (hence you can use environment variables).
+The commands are executed by piping to *SHELL* (hence you can use environment variables).
 
 *SHELL* will be the content of the first defined environment variable in the following list: *SXHKD_SHELL*, *SHELL*.
 
