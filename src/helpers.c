@@ -89,7 +89,7 @@ void execute(char *cmd)
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
-		execlp(shell, shell);
+		execlp(shell, shell, (char *)NULL);
 	}
 
 	close(fd[0]);
